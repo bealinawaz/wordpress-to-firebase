@@ -1,9 +1,10 @@
 <?php
 /*
-Plugin Name: WP to Firebase
+Plugin Name: WPW to Firebase
 Description: Sends WooCommerce users and orders data to Firebase
 Version: 1.0
 Author: Ali Nawaz
+Author URL: http://bealinawaz.com/
 */
 
 if (!defined('ABSPATH')) {

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WordPress to Firebase
+Plugin Name: WP to Firebase
 Description: Sends WooCommerce users and orders data to Firebase
 Version: 1.0
 Author: Ali Nawaz

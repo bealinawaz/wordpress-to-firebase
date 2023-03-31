@@ -118,8 +118,6 @@ function fbwp_get_all_wc_orders() {
 
     foreach ($orders as $order) {
         $order = wc_get_order($order->ID);
-        $uploaded_video_url = get_post_meta( $order->get_id(), '_video_file', true );
-
         $shipping_items = array();
         foreach ($order->get_shipping_methods() as $shipping_item) {
             $shipping_items[] = array(
@@ -165,15 +163,11 @@ function fbwp_get_all_wc_orders() {
             ),
             "payment_method" => $order->get_payment_method_title(),
             "payment_method_id" => $order->get_payment_method(),
-            "customer_note" => $order->get_customer_note(),
-            "uploaded_video_url" => $uploaded_video_url
+            "customer_note" => $order->get_customer_note()
         );
     }
-
     return $wc_orders;
 }
-
-
 
 function fbwp_get_all_wc_products() {
     $args = array(

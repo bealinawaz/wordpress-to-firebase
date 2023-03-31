@@ -70,7 +70,7 @@ function wp_to_firebase_api_key_callback() {
 
 
 // Function to get all WordPress users
-function get_all_wp_users() {
+function fbwp_get_all_wp_users() {
     $users = get_users();
     $wp_users = array();
 
@@ -106,7 +106,7 @@ function get_all_wp_users() {
 }
 
 // Function to get all WooCommerce orders
-function get_all_wc_orders() {
+function fbwp_get_all_wc_orders() {
     $args = array(
         'post_type' => 'shop_order',
         'post_status' => 'wc-completed',
@@ -175,7 +175,7 @@ function get_all_wc_orders() {
 
 
 
-function get_all_wc_products() {
+function fbwp_get_all_wc_products() {
     $args = array(
         'post_type' => 'product',
         'post_status' => 'publish',
@@ -266,15 +266,15 @@ function get_all_wc_products() {
     return $wc_products;
 }
 // Define the function to push data to Firebase
-function push_data_to_firebase() {
+function fbwp_push_data_to_firebase() {
     // Define Firebase database URL and API key
     $firebase_database_url = get_option( 'wp_to_firebase_database_url' );
     $firebase_api_key = get_option( 'wp_to_firebase_api_key' );
 
     // Get the WordPress and WooCommerce data
-    $wp_users = get_all_wp_users();
-    $wc_orders = get_all_wc_orders();
-    $wc_products = get_all_wc_products();
+    $wp_users = fbwp_get_all_wp_users();
+    $wc_orders = fbwp_get_all_wc_orders();
+    $wc_products = fbwp_get_all_wc_products();
 
     // Define the data you want to push to Firebase
     $data = array(
@@ -316,7 +316,4 @@ function push_data_to_firebase() {
     }
 }
 
-
-
-
-add_action('init', 'push_data_to_firebase');
+add_action('init', 'fbwp_push_data_to_firebase');

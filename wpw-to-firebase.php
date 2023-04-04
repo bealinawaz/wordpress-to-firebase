@@ -1,21 +1,21 @@
 <?php
 /*
 Plugin Name: WPW to Firebase
-Description: Sends WooCommerce users and orders data to Firebase
+Description: Sends WooCommerce users, products and orders data to Firebase
 Version: 1.0
 Author: Ali Nawaz
+Author URI: https//bealinawaz.com
 */
 if (!defined('ABSPATH')) {
     exit;
 }
+add_action( 'admin_menu', 'fbwp_to_firebase_add_menu_page' );
 
-add_action( 'admin_menu', 'wp_to_firebase_menu' );
-
-function wp_to_firebase_menu() {
-    add_menu_page( 'WP to Firebase', 'WP to Firebase', 'manage_options', 'wp-to-firebase', 'wp_to_firebase_options' );
+function fbwp_to_firebase_add_menu_page() {
+    add_menu_page( 'WP to Firebase', 'WP to Firebase', 'manage_options', 'fbwp-to-firebase', 'fbwp_to_firebase_options' );
 }
 
-function wp_to_firebase_options() {
+function fbwp_to_firebase_options() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
@@ -24,8 +24,8 @@ function wp_to_firebase_options() {
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            settings_fields( 'wp_to_firebase_options' );
-            do_settings_sections( 'wp-to-firebase' );
+            settings_fields( 'fbwp_to_firebase_options' );
+            do_settings_sections( 'fbwp-to-firebase' );
             submit_button();
             ?>
         </form>
@@ -42,32 +42,30 @@ function wp_to_firebase_options() {
     <?php
 }
 
-add_action( 'admin_init', 'wp_to_firebase_settings' );
+add_action( 'admin_init', 'fbwp_to_firebase_settings' );
 
-function wp_to_firebase_settings() {
-    register_setting( 'wp_to_firebase_options', 'wp_to_firebase_database_url' );
-    register_setting( 'wp_to_firebase_options', 'wp_to_firebase_api_key' );
-    add_settings_section( 'wp_to_firebase_section', 'Firebase Connection Settings', 'wp_to_firebase_section_callback', 'wp-to-firebase' );
-    add_settings_field( 'wp_to_firebase_database_url', 'Database URL', 'wp_to_firebase_database_url_callback', 'wp-to-firebase', 'wp_to_firebase_section' );
-    add_settings_field( 'wp_to_firebase_api_key', 'API Key', 'wp_to_firebase_api_key_callback', 'wp-to-firebase', 'wp_to_firebase_section' );
+function fbwp_to_firebase_settings() {
+    register_setting( 'fbwp_to_firebase_options', 'fbwp_to_firebase_database_url' );
+    register_setting( 'fbwp_to_firebase_options', 'fbwp_to_firebase_api_key' );
+    add_settings_section( 'fbwp_to_firebase_section', 'Firebase Connection Settings', 'fbwp_to_firebase_section_callback', 'fbwp-to-firebase' );
+    add_settings_field( 'fbwp_to_firebase_database_url', 'Firebase Database URL', 'fbwp_to_firebase_database_url_callback', 'fbwp-to-firebase', 'fbwp_to_firebase_section' );
+    add_settings_field( 'fbwp_to_firebase_api_key', 'Firebase API Key', 'fbwp_to_firebase_api_key_callback', 'fbwp-to-firebase', 'fbwp_to_firebase_section' );
 }
 
-function wp_to_firebase_section_callback() {
+function fbwp_to_firebase_section_callback() {
     echo 'Enter your Firebase connection settings:';
 }
 
 // Retrieve the saved
-
-function wp_to_firebase_database_url_callback() {
-    $database_url = get_option( 'wp_to_firebase_database_url' );
-    echo '<input type="text" name="wp_to_firebase_database_url" value="' . esc_attr( $database_url ) . '" size="60" />';
+function fbwp_to_firebase_database_url_callback() {
+    $database_url = get_option( 'fbwp_to_firebase_database_url' );
+    echo '<input type="text" name="fbwp_to_firebase_database_url" value="' . esc_attr( $database_url ) . '" size="60" />';
 }
 
-function wp_to_firebase_api_key_callback() {
-    $api_key = get_option( 'wp_to_firebase_api_key' );
-    echo '<input type="text" name="wp_to_firebase_api_key" value="' . esc_attr( $api_key ) . '" size="60" />';
+function fbwp_to_firebase_api_key_callback() {
+    $api_key = get_option( 'fbwp_to_firebase_api_key' );
+    echo '<input type="text" name="fbwp_to_firebase_api_key" value="' . esc_attr( $api_key ) . '" size="60" />';
 }
-
 
 // Function to get all WordPress users
 function fbwp_get_all_wp_users() {
